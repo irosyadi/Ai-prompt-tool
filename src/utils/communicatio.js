@@ -2,9 +2,9 @@ const URLS = [
   "https://chat.openai.com/*",
   "https://claude.ai/*",
   "https://www.bing.com/*",
-  "https://bard.google.com/*",
+  "https://gemini.google.com/*",
   "https://yiyan.baidu.com/*",
-  "https://www.baidu.com/*"
+  "https://chat.baidu.com/*"
 ];
 
 

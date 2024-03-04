@@ -56,6 +56,7 @@ const deepClone = (value, isCopyProto = true)=>{
  * @param {String} tag - 元素名，或html字符串
  * @param {Object} props - 元素属性，可选
  * @param {Array|Object|String} children - 子元素，可选。数组[[], {}]对象{}，字符串时创建的是文字节点。
+ * @param {Element} [parent] - 添加到parent尾部
  * @return {Element} Dom元素
  */
 const h = (tag, props, children, parent)=>{

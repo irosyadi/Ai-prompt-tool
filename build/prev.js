@@ -1,4 +1,4 @@
-// 1、改文件在编译前自动执行。通过manifest.json中的host_permissions字段。修改注入文件的域名列表。
+// 1、改文件在编译前自动执行。通过manifest.json中的host_permissions字段。修改注入文件的域名列表。 所以更改host_permissions字段就行
 // 2、重写manifest.json文件
 // 3、重写同步文件中的域名列表。
 

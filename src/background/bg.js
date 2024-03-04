@@ -10,13 +10,13 @@ new chrome.declarativeContent.PageStateMatcher({
         pageUrl: { hostEquals: 'www.bing.com' }
       }),
 new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: { hostEquals: 'bard.google.com' }
+        pageUrl: { hostEquals: 'gemini.google.com' }
       }),
 new chrome.declarativeContent.PageStateMatcher({
         pageUrl: { hostEquals: 'yiyan.baidu.com' }
       }),
 new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: { hostEquals: 'www.baidu.com' }
+        pageUrl: { hostEquals: 'chat.baidu.com' }
       })];
 
 

@@ -15,9 +15,9 @@
     "https://chat.openai.com/*",
     "https://claude.ai/*",
     "https://www.bing.com/*",
-    "https://bard.google.com/*",
+    "https://gemini.google.com/*",
     "https://yiyan.baidu.com/*",
-    "https://www.baidu.com/*"
+    "https://chat.baidu.com/*"
   ],
   "icons": {
     "48": "public/img/logo.png",
@@ -40,9 +40,9 @@
         "https://chat.openai.com/*",
         "https://claude.ai/*",
         "https://www.bing.com/*",
-        "https://bard.google.com/*",
+        "https://gemini.google.com/*",
         "https://yiyan.baidu.com/*",
-        "https://www.baidu.com/*"
+        "https://chat.baidu.com/*"
       ],
       "js": [
         "dist/index.js"
@@ -67,9 +67,9 @@
         "https://chat.openai.com/*",
         "https://claude.ai/*",
         "https://www.bing.com/*",
-        "https://bard.google.com/*",
+        "https://gemini.google.com/*",
         "https://yiyan.baidu.com/*",
-        "https://www.baidu.com/*"
+        "https://chat.baidu.com/*"
       ],
       "resources": [
         "public/font/iconfont.woff",

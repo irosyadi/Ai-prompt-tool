@@ -35,11 +35,45 @@ class OpenAiPrompt extends AiPrompt {
   }
 }
 
-
-
-class ClaudeAiPrompt extends AiPrompt {
+// 各个公用
+class CommonAiPrompt extends AiPrompt {
   constructor(){
     super();
+  }
+
+  // 重写 清除所有事件处理函数
+  clearAllHandler = (e)=>{
+    e.stopPropagation();
+    const textAreaBox = this.getTextArea();
+    while(textAreaBox.childNodes.length){
+      textAreaBox.lastChild.remove()
+    }
+    return textAreaBox;
+  }
+}
+
+
+
+class ClaudeAndGeminiAiPrompt extends CommonAiPrompt {
+  constructor(){
+    super();
+  }
+
+  // 重写 使用提示词事件处理函数
+  usePromptHandler = (target) => {
+    const textAreaBox = this.getTextArea();
+    textAreaBox.insertBefore(h('p', { 
+      innerText: target.tagName === 'P' ? target.innerText : target.children[0].innerText 
+    }), textAreaBox.lastChild);
+    textAreaBox.focus();
+  }
+}
+
+
+class ClaudeAiPrompt extends ClaudeAndGeminiAiPrompt {
+  constructor(){
+    super();
+    this._el = null // 
     this.observerAddEvent();
   }
 
@@ -65,22 +99,6 @@ class ClaudeAiPrompt extends AiPrompt {
 
   getTextArea(){
     return (this._el || document).querySelector('div[contenteditable=true]');
-  }
-
-  // 重写 使用提示词事件处理函数
-  usePromptHandler = (target) => {
-    const textAreaBox = this.getTextArea();
-    textAreaBox.insertBefore(h('p', { 
-      innerText: target.tagName === 'P' ? target.innerText : target.children[0].innerText 
-    }), textAreaBox.lastChild);
-    textAreaBox.focus();
-  }
-
-  // 重写 清除所有事件处理函数
-  clearAllHandler = (e)=>{
-    e.stopPropagation();
-    const textAreaBox = this.getTextArea();
-    textAreaBox.innerHTML = '';
   }
 }
 
@@ -124,31 +142,38 @@ class BingAiPrompt extends AiPrompt {
 };
 
 
-
-class BardAiPrompt extends AiPrompt {
+// google
+class GeminiAiPrompt extends ClaudeAndGeminiAiPrompt {
   constructor(){
     super();
     this.clearAll(); // 添加换行和清除所有 ,因为加载的时候监听过了
   }
 
+  getTextArea(){
+    return document.querySelector('div[contenteditable=true][role=textbox]');
+  }
+
   clearAll(){
-    super.clearAll(this.getTextArea().parentElement.parentElement)
+    super.clearAll(this.getTextArea().parentElement.parentElement.parentElement.parentElement.parentElement)
   }
 }
 
 
-
-class BaiduAiPrompt extends AiPrompt {
+// 百度搜索
+class BaiduAiPrompt extends CommonAiPrompt {
   constructor(){
     super();
     this.clearAll(); // 添加换行和清除所有 ,因为加载的时候监听过了
   }
 
+  getTextArea(){
+    return document.querySelector('div[contenteditable=true]');
+  }
+
   clearAll(el){
-    super.clearAll();
-    const textAreaBox = el || this.getTextArea();
-    textAreaBox.parentElement.style.overflow = 'visible'; // 文心父元素溢出隐藏“清除所有”的解决办法
-    this.newLine(textAreaBox); // 文心"换行"要自己添加
+    super.clearAll(el);
+    const textAreaBox = this.getTextArea();
+    this.newLine(textAreaBox);
   }
 
   // 换行 // 其他平台不需要
@@ -167,12 +192,50 @@ class BaiduAiPrompt extends AiPrompt {
       }else if (isDown && e.code === 'Enter'){
         // e.preventDefault();
         e.stopPropagation();
-        const target = e.target;
-        target.value += '\n';
+        h('br',null, null, textAreaBox)
         this.triggerInputEvent(textAreaBox);
         return false; // 取消冒泡
       }
     }, true); // 捕获阶段，避免bing原本的事件执行
+  }
+
+  // 重写 使用提示词事件处理函数
+  usePromptHandler = (target) => {
+    const textAreaBox = this.getTextArea();
+    const textNode = document.createTextNode(target.tagName === 'P' ? target.innerText : target.children[0].innerText)
+    textAreaBox.appendChild(textNode)
+    h('br',null, null, textAreaBox)
+    this.triggerInputEvent(textAreaBox);
+    textAreaBox.focus();
+  }
+
+  // 模拟输入删除来触发其他事件
+  analogInputDelete(el){
+    // 创建键盘事件对象
+    const spaceEvent = new KeyboardEvent("keydown", {
+      key: " ",
+      code: "Space",
+      charCode: 32,
+      keyCode: 32,
+    });
+    // 派发事件到目标元素
+    el.dispatchEvent(spaceEvent);
+
+    // 创建一个键盘事件对象
+    const backspaceEvent = new KeyboardEvent("keydown", {
+      key: "Backspace",
+      code: "Backspace",
+      charCode: 8,
+      keyCode: 8,
+    });
+
+    // 分派事件到目标元素
+    el.dispatchEvent(backspaceEvent);
+  }
+
+  clearAllHandler(){
+    const textAreaBox = super.clearAllHandler();
+    this.analogInputDelete(textAreaBox)
   }
 }
 
@@ -184,8 +247,29 @@ class ErnieAiPrompt extends BaiduAiPrompt{
     super()
   }
 
+  getTextArea(){
+    return document.querySelector('div[contenteditable=true]').firstChild;
+  }
+
   clearAll(){
-    super.clearAll(this.getTextArea().parentElement)
+    const clearAllBox = this.getTextArea().parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+    clearAllBox.style.overflow = 'visible'; // 文心父元素溢出隐藏“清除所有”的解决办法
+    super.clearAll(clearAllBox)
+  }
+
+  // 重写 使用提示词事件处理函数
+  usePromptHandler = (target) => {
+    const textAreaBox = this.getTextArea();
+    const ddd = h('span', { 
+      'data-lexical-text': true,
+      innerText: target.tagName === 'P' ? target.innerText : target.children[0].innerText 
+    }, null, textAreaBox)
+    textAreaBox.focus();
+  }
+
+  clearAllHandler(){
+    const textAreaBox = super.clearAllHandler();
+    this.analogInputDelete(textAreaBox)
   }
 }
 
@@ -194,7 +278,7 @@ export {
   OpenAiPrompt,
   ClaudeAiPrompt,
   BingAiPrompt,
-  BardAiPrompt,
+  GeminiAiPrompt,
   BaiduAiPrompt,
   ErnieAiPrompt,
 }
