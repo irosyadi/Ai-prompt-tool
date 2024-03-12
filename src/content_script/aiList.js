@@ -24,7 +24,7 @@ class OpenAiPrompt extends AiPrompt {
             
             if (node.querySelector('form')){
               // 切花对话， 添加清除和换行事件
-              queueMicrotask(()=>this.clearAll())
+              queueMicrotask(()=>this.clearAll(this.getTextArea().parentElement.parentElement))
             }
           }
         }
