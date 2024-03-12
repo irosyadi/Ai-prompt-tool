@@ -209,8 +209,6 @@
 }
 
 
-
-
 #prompt-container:hover>.prompt-box {
   /* hover显示列表 先废弃，js模拟 调试用 */
   /* width: 100vw;

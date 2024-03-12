@@ -261,6 +261,9 @@ class AiPrompt extends DomUilts {
     const clearBtn = h('i', { class: 'clear-all-content', innerText: '+' });
     clearBtn.addEventListener('click', this.clearAllHandler);
     parentElement = parentElement || this.getTextArea().parentElement; // 如没传parentElement就用textAreaBox.parentElement。 如bing
+    if (window.getComputedStyle(parentElement).position === 'static'){
+      parentElement.style.position = 'relative' // 子绝父相
+    }
     parentElement.appendChild(clearBtn);
   }
 
