@@ -12,7 +12,7 @@ class OpenAiPrompt extends AiPrompt {
 
   // 监听变化 添加换行和清除所有
   observerAddEvent(){
-    this.clearAll();
+    this.clearAll(this.getTextArea().parentElement.parentElement);
     const mutationObserver = new MutationObserver((mutationRecords, observer)=>{
       for(const record of mutationRecords){
         if (record.addedNodes.length){
