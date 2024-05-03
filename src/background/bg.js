@@ -1,7 +1,7 @@
 // background.js
 
 const conditions = [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: { hostEquals: 'chat.openai.com' }
+        pageUrl: { hostEquals: 'chatgpt.com' }
       }),
 new chrome.declarativeContent.PageStateMatcher({
         pageUrl: { hostEquals: 'claude.ai' }

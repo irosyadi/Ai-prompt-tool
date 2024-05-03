@@ -5,7 +5,7 @@ import { OpenAiPrompt, ClaudeAiPrompt, BingAiPrompt, GeminiAiPrompt, BaiduAiProm
 window.onload = ()=>{
   let prevCheck = ()=>document.querySelector('textarea'), AiPrompt;
   
-  if (window.location.hostname ==='chat.openai.com'){
+  if (window.location.hostname ==='chatgpt.com'){
     AiPrompt = OpenAiPrompt;
   } else if(window.location.hostname === 'claude.ai'){
     prevCheck = ()=>document.querySelector('div[contenteditable=true]');

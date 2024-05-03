@@ -1,5 +1,5 @@
 const URLS = [
-  "https://chat.openai.com/*",
+  "https://chatgpt.com/*",
   "https://claude.ai/*",
   "https://www.bing.com/*",
   "https://gemini.google.com/*",

@@ -12,7 +12,7 @@
     "background"
   ],
   "host_permissions": [
-    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
     "https://claude.ai/*",
     "https://www.bing.com/*",
     "https://gemini.google.com/*",
@@ -37,7 +37,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
         "https://claude.ai/*",
         "https://www.bing.com/*",
         "https://gemini.google.com/*",
@@ -64,7 +64,7 @@
   "web_accessible_resources": [
     {
       "matches": [
-        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
         "https://claude.ai/*",
         "https://www.bing.com/*",
         "https://gemini.google.com/*",
